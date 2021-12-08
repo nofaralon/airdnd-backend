@@ -4,9 +4,9 @@ const orderService = require('./order.service')
 
 
 async function getOrders(req, res) {
-    console.log(req.body);
+    const { userId } = req.params;
     try {
-        const orders = await orderService.query(req.body)
+        const orders = await orderService.query(userId)
         res.send(orders)
     } catch (err) {
         logger.error('Cannot get orders', err)

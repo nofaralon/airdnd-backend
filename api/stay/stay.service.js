@@ -3,12 +3,13 @@ const logger = require('../../services/logger.service')
 const ObjectId = require('mongodb').ObjectId
 
 async function query(filterBy) {
+
     try {
-        // const criteria = _buildCriteria(filterBy)
-        // const criteria = {}
+        const criteria = _buildCriteria(filterBy)
+            // const criteria = {}
 
         let collection = await dbService.getCollection('stay')
-        const stays = await collection.find({}).toArray()
+        const stays = await collection.find(criteria).toArray()
         return stays
     } catch (err) {
         logger.error('cannot find stays', err)
@@ -65,26 +66,31 @@ async function update(stay) {
 }
 
 function _buildCriteria(filterBy) {
-    // const criteria = {}
-    // if (filterBy.txt) {
-    //     const txtCriteria = { $regex: filterBy.txt, $options: 'i' }
-    //     criteria.name = txtCriteria
-    // }
-    // if (filterBy.select) {
-    //     if (filterBy.select === 'In stock') {
-    //         criteria.inStock = { $eq: true }
-    //     } else if (filterBy.select === 'Out of stock') {
-    //         criteria.inStock = { $eq: false }
-    //     }
 
-    //     // criteria.inStock = { $eq: filterBy.select }
-    // }
-    // if (filterBy.lable && filterBy.lable.length) {
-    //     criteria.labels = { $in: filterBy.lable }
-    // }
-    // console.log('criteria:', criteria);
-    // return criteria
+    return filterBy ? { 'host._id': filterBy } : {}
 }
+
+// function _buildCriteria(filterBy) {
+//     // const criteria = {}
+//     // if (filterBy.txt) {
+//     //     const txtCriteria = { $regex: filterBy.txt, $options: 'i' }
+//     //     criteria.name = txtCriteria
+//     // }
+//     // if (filterBy.select) {
+//     //     if (filterBy.select === 'In stock') {
+//     //         criteria.inStock = { $eq: true }
+//     //     } else if (filterBy.select === 'Out of stock') {
+//     //         criteria.inStock = { $eq: false }
+//     //     }
+
+//     //     // criteria.inStock = { $eq: filterBy.select }
+//     // }
+//     // if (filterBy.lable && filterBy.lable.length) {
+//     //     criteria.labels = { $in: filterBy.lable }
+//     // }
+//     // console.log('criteria:', criteria);
+//     // return criteria
+// }
 
 module.exports = {
     remove,

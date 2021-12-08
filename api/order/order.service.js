@@ -50,13 +50,8 @@ async function add(order) {
 }
 
 function _buildCriteria(filterBy) {
-    let criteria = {
-        'buyer._id': ''
-    };
-    console.log(filterBy, 'filterBy');
-    if (filterBy.userId) criteria['buyer._id'] = { $eq: filterBy.order.buyer._id }
-    console.log('criteria', criteria);
-    return criteria
+
+    return filterBy ? { 'buyer._id': filterBy } : {}
 }
 
 module.exports = {
