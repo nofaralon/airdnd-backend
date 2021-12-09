@@ -10,7 +10,7 @@ async function getStays(req, res) {
         // var queryParams = req.query;
         // console.log('queryParams', queryParams);
         // const stays = await stayService.query(queryParams)
-        const stays = await stayService.query(userId)
+        const stays = await stayService.query()
 
         res.json(stays);
     } catch (err) {
@@ -19,6 +19,16 @@ async function getStays(req, res) {
     }
 }
 
+async function getUserStays(req, res) {
+    const userId = req.params.id
+    console.log('userId -controller', userId);
+    try {
+        const stays = await stayService.getByUserId(userId)
+        res.json(stays)
+    } catch (err) {
+        throw (err)
+    }
+}
 // GET BY ID 
 async function getStayById(req, res) {
     try {
@@ -71,6 +81,7 @@ async function removeStay(req, res) {
 module.exports = {
     getStays,
     getStayById,
+    getUserStays,
     addStay,
     updateStay,
     removeStay
