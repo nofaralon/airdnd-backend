@@ -8,6 +8,7 @@ const router = express.Router()
 // router.use(requireAuth)
 
 router.get('/:filterBy?',log, getStays)
+router.get('/user/:id',log,getUserStays)
 router.get('/:id', getStayById)
 router.post('/', addStay)
 router.put('/:id', updateStay)
