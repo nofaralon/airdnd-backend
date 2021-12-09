@@ -3,14 +3,13 @@ const logger = require('../../services/logger.service')
 
 // GET LIST
 async function getStays(req, res) {
-
-    const { userId } = req.params;
-
+    let filterBy;
+   if(req.params) filterBy=JSON.parse(req.params.filterBy) 
     try {
         // var queryParams = req.query;
         // console.log('queryParams', queryParams);
         // const stays = await stayService.query(queryParams)
-        const stays = await stayService.query()
+        const stays = await stayService.query(filterBy)
 
         res.json(stays);
     } catch (err) {
