@@ -28,6 +28,19 @@ async function getById(stayId) {
   }
 }
 
+async function getByUserId(userId) {
+    console.log('userId in service', userId);
+    try {
+        const collection = await dbService.getCollection('stay')
+        const stays = collection.find({ 'host._id': userId }).toArray()
+        console.log('stays in service', stays);
+        return stays
+    } catch (err) {
+        logger.error(`while finding stay ${userId}`, err)
+        throw err
+    }
+}
+
 async function remove(stayId) {
   try {
     const collection = await dbService.getCollection("stay");
@@ -142,9 +155,10 @@ criteria.type = { $in: filterBy.type } }
 // }
 
 module.exports = {
-  remove,
-  query,
-  getById,
-  add,
-  update,
-};
+    remove,
+    query,
+    getById,
+    getByUserId,
+    add,
+    update,
+}
