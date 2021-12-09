@@ -29,9 +29,10 @@ async function getById(stayId) {
 }
 
 async function getByUserId(userId) {
-    console.log('userId in service', userId);
+    // console.log('userId in service', userId);
     try {
         const collection = await dbService.getCollection('stay')
+        console.log("collection in service",collection);
         const stays = collection.find({ 'host._id': userId }).toArray()
         console.log('stays in service', stays);
         return stays
