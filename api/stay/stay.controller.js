@@ -4,10 +4,9 @@ const logger = require('../../services/logger.service')
 // GET LIST
 async function getStays(req, res) {
     let filterBy;
-   if(req.params) filterBy=JSON.parse(req.params.filterBy) 
+    if (req.params) filterBy = JSON.parse(req.params.filterBy)
     try {
         // var queryParams = req.query;
-        // console.log('queryParams', queryParams);
         // const stays = await stayService.query(queryParams)
         const stays = await stayService.query(filterBy)
 
@@ -20,10 +19,8 @@ async function getStays(req, res) {
 
 async function getUserStays(req, res) {
     const userId = req.params.id
-    // console.log('userId -controller', userId);
     try {
         const stays = await stayService.getByUserId(userId)
-        console.log("the stays we get",stays);
         res.json(stays)
     } catch (err) {
         throw (err)

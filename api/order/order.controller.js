@@ -1,3 +1,4 @@
+const { log } = require('../../middlewares/logger.middleware');
 const logger = require('../../services/logger.service')
 const orderService = require('./order.service')
     // const socketService = require('../../services/socket.service')
@@ -6,7 +7,11 @@ const orderService = require('./order.service')
 async function getOrders(req, res) {
     const { userId } = req.params;
     try {
-        const orders = await orderService.query(userId)
+        if (userId) {
+            var orders = await orderService.query(userId)
+        } else {
+            var orders = await orderService.query()
+        }
         res.send(orders)
     } catch (err) {
         logger.error('Cannot get orders', err)
@@ -28,12 +33,10 @@ async function deleteOrder(req, res) {
 async function addOrder(req, res) {
     try {
         var order = req.body
-        console.log(order, 'order');
         order = await orderService.add(order)
         res.send(order)
 
     } catch (err) {
-        console.log(err)
         logger.error('Failed to add order', err)
         res.status(500).send({ err: 'Failed to add order' })
     }

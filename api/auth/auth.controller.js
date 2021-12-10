@@ -3,10 +3,8 @@ const logger = require('../../services/logger.service')
 
 async function login(req, res) {
     const { username, password } = req.body
-    console.log(username, password, '1');
     try {
         const user = await authService.login(username, password)
-        console.log(user, 'user');
         req.session.user = user
         res.json(user)
     } catch (err) {
@@ -16,12 +14,10 @@ async function login(req, res) {
 }
 
 async function signup(req, res) {
-    console.log('here');
     try {
         const { username, password, fullname } = req.body
-        console.log(username, password, fullname);
-        // Never log passwords
-        // logger.debug(fullname + ', ' + username + ', ' + password)
+            // Never log passwords
+            // logger.debug(fullname + ', ' + username + ', ' + password)
         const account = await authService.signup(username, password, fullname)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
         const user = await authService.login(username, password)
