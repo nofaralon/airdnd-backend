@@ -7,9 +7,13 @@ async function query(filterBy = {}) {
     console.log(filterBy, 'fiterer in service');
     try {
         const criteria = _buildCriteria(filterBy)
-        console.log('criteria', criteria);
         const collection = await dbService.getCollection('order')
-        var orders = await collection.find(criteria).toArray()
+        if (filterBy.length){
+            console.log('criteria', criteria);
+            var orders = await collection.find(criteria).toArray()
+        }else{
+            var orders = await collection.find().toArray()
+        }
 
         console.log(orders);
 

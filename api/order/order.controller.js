@@ -1,3 +1,4 @@
+const { log } = require('../../middlewares/logger.middleware');
 const logger = require('../../services/logger.service')
 const orderService = require('./order.service')
     // const socketService = require('../../services/socket.service')
@@ -5,8 +6,14 @@ const orderService = require('./order.service')
 
 async function getOrders(req, res) {
     const { userId } = req.params;
+    console.log('in getOrders',req.params);
     try {
-        const orders = await orderService.query(userId)
+        if(userId){
+            var orders = await orderService.query(userId)
+        }else{
+            var orders = await orderService.query()
+            console.log('all orders',orders);
+        }
         res.send(orders)
     } catch (err) {
         logger.error('Cannot get orders', err)

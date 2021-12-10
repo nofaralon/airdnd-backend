@@ -23,7 +23,6 @@ async function getUserStays(req, res) {
     // console.log('userId -controller', userId);
     try {
         const stays = await stayService.getByUserId(userId)
-        console.log("the stays we get",stays);
         res.json(stays)
     } catch (err) {
         throw (err)
