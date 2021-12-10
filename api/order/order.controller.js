@@ -6,13 +6,11 @@ const orderService = require('./order.service')
 
 async function getOrders(req, res) {
     const { userId } = req.params;
-    console.log('in getOrders',req.params);
     try {
-        if(userId){
+        if (userId) {
             var orders = await orderService.query(userId)
-        }else{
+        } else {
             var orders = await orderService.query()
-            console.log('all orders',orders);
         }
         res.send(orders)
     } catch (err) {
@@ -35,12 +33,10 @@ async function deleteOrder(req, res) {
 async function addOrder(req, res) {
     try {
         var order = req.body
-        console.log(order, 'order');
         order = await orderService.add(order)
         res.send(order)
 
     } catch (err) {
-        console.log(err)
         logger.error('Failed to add order', err)
         res.status(500).send({ err: 'Failed to add order' })
     }

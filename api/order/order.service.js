@@ -4,18 +4,15 @@ const asyncLocalStorage = require('../../services/als.service')
 const logger = require('../../services/logger.service')
 
 async function query(filterBy = {}) {
-    console.log(filterBy, 'fiterer in service');
     try {
         const criteria = _buildCriteria(filterBy)
         const collection = await dbService.getCollection('order')
-        if (filterBy.length){
-            console.log('criteria', criteria);
+        if (filterBy.length) {
             var orders = await collection.find(criteria).toArray()
-        }else{
+        } else {
             var orders = await collection.find().toArray()
         }
 
-        console.log(orders);
 
         return orders
     } catch (err) {
