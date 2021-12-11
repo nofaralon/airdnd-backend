@@ -6,7 +6,6 @@ async function query(filterBy = {}) {
     // {$and:[{'price':{ $lte: 250 }},{'capacity':{$gte:5}}]}
     try {
         const criteria = _buildCriteria(filterBy);
-
         let collection = await dbService.getCollection("stay");
         const stays = await collection.find(criteria).toArray();
         return stays;
