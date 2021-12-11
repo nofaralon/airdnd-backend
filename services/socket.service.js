@@ -31,16 +31,7 @@ function connectSockets(http, session) {
                 // emits only to sockets in the same room
                 // gIo.to(socket.myTopic).emit('chat addMsg', msg)
         })
-        socket.on('user-watch', userId => {
-            socket.join('watching:' + userId)
-        })
-        socket.on('set-user-socket', userId => {
-            logger.debug(`Setting (${socket.id}) socket.userId = ${userId}`)
-            socket.userId = userId
-        })
-        socket.on('unset-user-socket', () => {
-            delete socket.userId
-        })
+
 
     })
 }
