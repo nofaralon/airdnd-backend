@@ -14,20 +14,22 @@ function connectSockets(http, session) {
         socket.on('disconnect', socket => {
             console.log('Someone disconnected')
         })
-        socket.on('chat topic', topic => {
+        socket.on('newOrder', topic => {
+            console.log('topic', topic);
             if (socket.myTopic === topic) return;
             if (socket.myTopic) {
                 socket.leave(socket.myTopic)
             }
             socket.join(topic)
             socket.myTopic = topic
+
         })
-        socket.on('chat newMsg', msg => {
-            console.log('Emitting Chat msg', msg);
+        socket.on('addOrder', order => {
+            console.log('sending new order to the host', order);
             // emits to all sockets:
-            // gIo.emit('chat addMsg', msg)
-            // emits only to sockets in the same room
-            gIo.to(socket.myTopic).emit('chat addMsg', msg)
+            gIo.emit('hostOrders', order)
+                // emits only to sockets in the same room
+                // gIo.to(socket.myTopic).emit('chat addMsg', msg)
         })
         socket.on('user-watch', userId => {
             socket.join('watching:' + userId)
@@ -96,6 +98,7 @@ async function _printSockets() {
     console.log(`Sockets: (count: ${sockets.length}):`)
     sockets.forEach(_printSocket)
 }
+
 function _printSocket(socket) {
     console.log(`Socket - socketId: ${socket.id} userId: ${socket.userId}`)
 }
@@ -106,6 +109,3 @@ module.exports = {
     emitToUser,
     broadcast,
 }
-
-
-
