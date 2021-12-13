@@ -8,9 +8,9 @@ async function query(filterBy = {}) {
         const criteria = _buildCriteria(filterBy)
         const collection = await dbService.getCollection('order')
         if (filterBy.length) {
-            var orders = await collection.find(criteria).toArray()
+            var orders = await collection.find(criteria).sort({ $natural: -1 }).toArray()
         } else {
-            var orders = await collection.find().toArray()
+            var orders = await collection.find().sort({ $natural: -1 }).toArray()
         }
 
 
