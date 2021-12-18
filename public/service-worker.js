@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.89f6e52d4335d9fbb3c892561beae5f8.js"
+  "/precache-manifest.eb0303536a9b8412c3b7cfc8a1faa985.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "airdnd-frontend"});
